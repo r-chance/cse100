@@ -1,0 +1,71 @@
+Robert Chance
+A13088857
+CSE100
+
+This file contains the answers to questions on PA1.
+
+Q1.) The command "make bst" generates a total of 4 files. 3 of the files are
+     object files called testBST.o, BSTInt.o, and BSTNodeInt.o. The last file
+     was the main target of the makefile, "bst".
+
+Q2.) This is the error message resulting from removing the name scope of the
+     insert function:
+
+
+     g++  	 -g -Wall -std=c++11 -c BSTInt.cpp
+     BSTInt.cpp: In function ‘bool insert(int)’:
+     BSTInt.cpp:25:8: error: ‘root’ was not declared in this scope
+        if (!root) {
+             ^
+     BSTInt.cpp:27:7: error: ‘isize’ was not declared in this scope
+          ++isize;
+            ^
+     BSTInt.cpp:31:22: error: ‘root’ was not declared in this scope
+        BSTNodeInt* curr = root;
+                           ^
+     BSTInt.cpp:56:5: error: ‘isize’ was not declared in this scope
+        ++isize;
+          ^
+     Makefile:29: recipe for target 'BSTInt.o' failed
+     make: *** [BSTInt.o] Error 1
+
+
+     The error occurs because the function is no longer a member of the 
+     BSTInt class, and the object member variables, "root" and "isize",
+     are no longer in the scope of this function.
+
+Q3.) The bug in the BSTInt implementation starts on line 37 in the insert
+     function.  The loop ends prematurely when there is only one child node
+     and causes a pointer overwrite and memory leak.
+
+Q4.) My process for debugging first included checking simple, common errors.
+     The first tests I wrote were for retriving the min and max elements. Next,
+     I checked error handling by trying to find an element in a null list. 
+     I then decided to draw out the tree as each node was inserted and that was
+     when I saw the flaw in logic in the insert function.  I then made a test
+     in which I inserted nodes until the BST satisfied the conditions which I
+     thought would reveal the bug, and it did.  I changed the logic of the 
+     while loop to include a check if there are any child nodes. The curr
+     pointer after the loop now points to the parent of the new node, without
+     overwriting any pointers.
+
+Q5.) The argument of BSTInt::insert() is passed by value, and the argument of
+     BST::insert() is passed by reference. I believe the reason for this is
+     is to maximize time/space efficiency.  It is faster to pass by value,
+     and for primative data types, such as ints, the space requirement is 
+     roughly the same.  For objects, a pass by value will copy the entire
+     object and consume more memory, and since we don't intend to modify the
+     object, we have no need to make a new copy and should pass by reference.
+
+Q6.) Sorted inputs produce taller trees as each successive input line will 
+     be assigned to the previous input's right child, and essentially produce
+     a linked list.
+
+Q7.) I would expect a sorted input to produce a tree with a height equal to 
+     the number of input lines (minus 1, as the root has 0 height). I would
+     also expect a random input to produce an average tree height of log_2 of
+     the number of input lines.  Upon building the trees, the height and size
+     of the sorted input tree is 11793 and 11794, respectively.  The height and
+     size of the random input tree is 32 and 11794, respectively.  I make these
+     assumptions based on the reading on Stepik, and from Friday's class
+     lecture.

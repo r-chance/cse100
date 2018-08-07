@@ -1,0 +1,47 @@
+1. The problem you solved
+
+We decided to compute the average distance form a unique ID of a Youtube video to all others. The unique video IDs act like 
+
+2. How you solved it
+
+We solved this problem by modifying my BFS and path traversal algorithms to compute the number of edges that exist for a 
+particular path between two different vertices. We did this for every actor in the graph (excluding the person you want the average distance to).  As such,
+this program will compute these values very slow on large, dense graphs so it is suggested that it be tested on smaller files. We tested this program on small
+files where we were able to manually compute the average distance.
+
+3. How you tested it
+
+To run this program compile using: make extension
+
+then, run the executable by....
+
+./extension filename videoID
+
+i.e.
+
+./extension 0.txt 8111IIgrBYO
+
+
+
+It is important that you write the video ID exactly as it appears
+in the data file. If the id is given as the 2nd argument does
+not exist in the graph constructed from the first argument it will output
+"Actor not found" to the terminal and return -1.
+
+
+4. How the grader should run your program
+
+
+For example, here is the program running on a movie_casts_1981.tsv graph 
+to demonstrate the correctness.
+The link for this data is : http://netsg.cs.sfu.ca/youtubedata/
+We used no4, under 0302.zip, file name: 0.txt
+The extension works faster for small data, so if you chose a bigger file, it will 
+take longer for it to process. But any of the data listed in the above website 
+will work.
+-------------------------------------------------------------------------------
+./extensionConnection YoutubeDataset.txt d6K19STJkxQ
+Output:
+The average shortest path to d6K19STJkxQ: 0.154229
+
+
